@@ -88,7 +88,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
             title: Text('An error ocurred.'),
             content: Text('오류가 발생했습니다.'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('확인'),
                 onPressed: () {
                   Navigator.of(ctx).pop();
@@ -121,71 +121,71 @@ class _EditPostScreenState extends State<EditPostScreen> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+        child: CircularProgressIndicator(),
+      )
           : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _form,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        initialValue: _initValues['title'],
-                        decoration: InputDecoration(
-                          labelText: '제목',
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context)
-                              .requestFocus(_contentsFocusNode);
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '제목을 입력해주세요.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedPost = Post(
-                            title: value,
-                            contents: _editedPost.contents,
-                            datetime: _editedPost.datetime,
-                            boardId: arguments['boardId'],
-                            userId: userId,
-                            id: _editedPost.id,
-                          );
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _initValues['contents'],
-                        decoration: InputDecoration(labelText: '내용'),
-                        maxLines: 15,
-                        keyboardType: TextInputType.multiline,
-                        textInputAction: TextInputAction.newline,
-                        focusNode: _contentsFocusNode,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '내용을 입력해주세요.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedPost = Post(
-                            title: _editedPost.title,
-                            contents: value,
-                            boardId: _editedPost.boardId,
-                            datetime: _editedPost.datetime,
-                            id: _editedPost.id,
-                            userId: _editedPost.userId,
-                          );
-                        },
-                      ),
-                    ],
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _form,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  initialValue: _initValues['title'],
+                  decoration: InputDecoration(
+                    labelText: '제목',
                   ),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context)
+                        .requestFocus(_contentsFocusNode);
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return '제목을 입력해주세요.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _editedPost = Post(
+                      title: value,
+                      contents: _editedPost.contents,
+                      datetime: _editedPost.datetime,
+                      boardId: arguments['boardId'],
+                      userId: userId,
+                      id: _editedPost.id,
+                    );
+                  },
                 ),
-              ),
+                TextFormField(
+                  initialValue: _initValues['contents'],
+                  decoration: InputDecoration(labelText: '내용'),
+                  maxLines: 15,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  focusNode: _contentsFocusNode,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return '내용을 입력해주세요.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _editedPost = Post(
+                      title: _editedPost.title,
+                      contents: value,
+                      boardId: _editedPost.boardId,
+                      datetime: _editedPost.datetime,
+                      id: _editedPost.id,
+                      userId: _editedPost.userId,
+                    );
+                  },
+                ),
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 }

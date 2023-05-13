@@ -62,27 +62,25 @@ class MyApp extends StatelessWidget {
           title: 'ForumDemo',
           theme: ThemeData(
             primaryColor: Colors.purple,
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato',
+            fontFamily: 'Lato', colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(secondary: Colors.deepOrange),
           ),
           home: auth.isAuth
               ? MainScreen()
               : FutureBuilder(
-                  future: auth.tryAutoLogin(),
-                  builder: (ctx, authResultSnapshot) =>
-                      authResultSnapshot.connectionState ==
-                              ConnectionState.waiting
-                          ? SplashScreen()
-                          : AuthScreen(),
-                ),
+            future: auth.tryAutoLogin(),
+            builder: (ctx, authResultSnapshot) =>
+            authResultSnapshot.connectionState ==
+                ConnectionState.waiting
+                ? SplashScreen()
+                : AuthScreen(),
+          ),
           routes: {
             BoardScreen.routeName: (ctx) => BoardScreen(),
             PostDetailScreen.routeName: (ctx) => PostDetailScreen(),
             EditPostScreen.routeName: (ctx) => EditPostScreen(),
             NotiCenterScreen.routeName: (ctx) => NotiCenterScreen(),
             SearchScreen.routeName:(ctx)=>SearchScreen(),
-          },
+          }, // routes
         ),
       ),
     );

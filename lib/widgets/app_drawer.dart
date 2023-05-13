@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 
 import '../screens/notification_center_screen.dart';
 import '../providers/auth.dart';
@@ -33,26 +33,26 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           userEmail != null
               ? Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        backgroundColor: Color(0xffE6E6E6),
-                        child: Icon(
-                          Icons.person,
-                          color: Color(0xffCCCCCC),
-                        ),
-                      ),
-                    ),
-                    title: Text(userEmail),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  backgroundColor: Color(0xffE6E6E6),
+                  child: Icon(
+                    Icons.person,
+                    color: Color(0xffCCCCCC),
                   ),
-                )
+                ),
+              ),
+              title: Text(userEmail),
+            ),
+          )
               : Container(),
           ListTile(
             leading: hasNotification
                 ? Badge(
-                    child: Icon(Icons.notifications_none),
-                  )
+              child: Icon(Icons.notifications_none),
+            )
                 : Icon(Icons.notifications_none),
             title: Text('알림 센터'),
             onTap: () {

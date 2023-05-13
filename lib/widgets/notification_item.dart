@@ -12,8 +12,8 @@ import '../models/notification.dart' as noti;
 class NotificationItem extends StatelessWidget {
   final noti.Notification notification;
   NotificationItem(
-    this.notification,
-  );
+      this.notification,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class NotificationItem extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             notification.contents!,
             maxLines: 1,
@@ -41,13 +41,13 @@ class NotificationItem extends StatelessWidget {
           ),
           (DateTime.now().day - notification.datetime!.day >= 1)
               ? Text(
-                  DateFormat('MM/dd').format(notification.datetime),
-                  style: TextStyle(color: Colors.black26),
-                )
+            DateFormat('MM/dd').format(notification.datetime),
+            style: TextStyle(color: Colors.black26),
+          )
               : Text(
-                  DateFormat('HH:mm').format(notification.datetime),
-                  style: TextStyle(color: Colors.black26),
-                ),
+            DateFormat('HH:mm').format(notification.datetime),
+            style: TextStyle(color: Colors.black26),
+          ),
         ]),
         trailing: IconButton(
           onPressed: () async {

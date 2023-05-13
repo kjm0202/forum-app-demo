@@ -10,8 +10,8 @@ import '../providers/auth.dart';
 class PostItem extends StatelessWidget {
   final String? id;
   PostItem(
-    this.id,
-  );
+      this.id,
+      );
 
   @override
   Widget build(BuildContext context) {

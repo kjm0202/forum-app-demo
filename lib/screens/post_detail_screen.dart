@@ -44,10 +44,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as String;
     final post =
-        Provider.of<Posts>(context).items.firstWhere((post) => post.id == id);
+    Provider.of<Posts>(context).items.firstWhere((post) => post.id == id);
     final comments = Provider.of<Comments>(context).items;
     final authUserId =
-        Provider.of<Auth>(context, listen: false).userId as String;
+    Provider.of<Auth>(context, listen: false).userId as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,63 +59,63 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         // 글쓴이가 자기 자신이면 수정, 삭제 버튼 활성
         actions: authUserId == post.userId
             ? <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pushNamed(EditPostScreen.routeName,
-                        arguments: {'postId': id, 'boardId': post.boardId});
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text('삭제'),
-                        content: Text(
-                          '게시글을 삭제할까요?',
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              '취소',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            onPressed: () {
-                              Navigator.of(ctx).pop(false);
-                            },
-                          ),
-                          FlatButton(
-                            child: Text(
-                              '확인',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            onPressed: () async {
-                              Navigator.of(ctx).pop(true);
-                              try {
-                                Navigator.pop(context);
-                                await Provider.of<Posts>(context, listen: false)
-                                    .deletePost(id);
-                              } catch (error) {
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                    "삭제하지 못했습니다.",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ));
-                              }
-                            },
-                          ),
-                        ],
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(EditPostScreen.routeName,
+                  arguments: {'postId': id, 'boardId': post.boardId});
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text('삭제'),
+                  content: Text(
+                    '게시글을 삭제할까요?',
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text(
+                        '취소',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor),
                       ),
-                    );
-                  },
+                      onPressed: () {
+                        Navigator.of(ctx).pop(false);
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        '확인',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor),
+                      ),
+                      onPressed: () async {
+                        Navigator.of(ctx).pop(true);
+                        try {
+                          Navigator.pop(context);
+                          await Provider.of<Posts>(context, listen: false)
+                              .deletePost(id);
+                        } catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              "삭제하지 못했습니다.",
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ]
+              );
+            },
+          ),
+        ]
             : null,
       ),
       body: Stack(children: [
@@ -174,19 +174,19 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   // 댓글 목록
                   comments.isEmpty
                       ? Center(
-                          child: Text('No comments'),
-                        )
+                    child: Text('No comments'),
+                  )
                       : Column(
-                          children: [
-                            Column(
-                                children: comments
-                                    .map((comment) => CommentItem(comment.id))
-                                    .toList()),
-                            SizedBox(
-                              height: 100,
-                            )
-                          ],
-                        )
+                    children: [
+                      Column(
+                          children: comments
+                              .map((comment) => CommentItem(comment.id))
+                              .toList()),
+                      SizedBox(
+                        height: 100,
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -226,32 +226,32 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             suffixIcon: _isLoading
                                 ? CircularProgressIndicator()
                                 : IconButton(
-                                    icon: Icon(Icons.send),
-                                    onPressed: () {
-                                      String commentText =
-                                          _commentTextEditController.text;
-                                      print('input comment: ' +
-                                          _commentTextEditController.text);
+                              icon: Icon(Icons.send),
+                              onPressed: () {
+                                String commentText =
+                                    _commentTextEditController.text;
+                                print('input comment: ' +
+                                    _commentTextEditController.text);
 
-                                      if (_formKey.currentState!.validate()) {
-                                        _addComment(post.boardId!, post.id!,
-                                            commentText);
+                                if (_formKey.currentState!.validate()) {
+                                  _addComment(post.boardId!, post.id!,
+                                      commentText);
 
-                                        _commentTextEditController.clear();
-                                        _commentFocusNode.unfocus();
+                                  _commentTextEditController.clear();
+                                  _commentFocusNode.unfocus();
 
-                                        if (post.userId != authUserId) {
-                                          _addNotification(
-                                              post.title!,
-                                              commentText,
-                                              post.id!,
-                                              post.userId!);
-                                        }
-                                      } else {
-                                        null;
-                                      }
-                                    },
-                                  ),
+                                  if (post.userId != authUserId) {
+                                    _addNotification(
+                                        post.title!,
+                                        commentText,
+                                        post.id!,
+                                        post.userId!);
+                                  }
+                                } else {
+                                  null;
+                                }
+                              },
+                            ),
                             isDense: true,
                           ),
                         ),
